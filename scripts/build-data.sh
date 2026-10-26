@@ -24,4 +24,5 @@ gh api --paginate "users/$OWNER/repos?per_page=100&type=owner" \
       | sort_by(.updated) | reverse
       | {owner: $owner, generated: (now | todate), repos: .}
     ' > "$OUT"
+python3 -I "$(dirname "$0")/enrich.py" "$OUT"
 echo "$(jq '.repos | length' "$OUT") Repositories -> $OUT"

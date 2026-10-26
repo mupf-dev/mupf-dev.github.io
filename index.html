@@ -3,132 +3,193 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>mupf-dev – Projekte</title>
-<meta name="description" content="Alle Open-Source-Projekte von mupf-dev auf einen Blick – mit Links zu Live-Seiten und Code.">
+<title>mupf-dev – Entwicklungsportfolio</title>
+<meta name="description" content="Meine Open-Source-Projekte: Smart Home, Self-Hosting, 3D im Browser und lokale KI.">
+<meta property="og:title" content="mupf-dev – Entwicklungsportfolio">
+<meta property="og:description" content="Meine Open-Source-Projekte: Smart Home, Self-Hosting, 3D im Browser und lokale KI.">
 <link rel="icon" href="https://avatars.githubusercontent.com/u/265322079?v=4&s=64">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #f6f7f9;
+    --bg: #faf7f2;
     --surface: #ffffff;
-    --text: #14171c;
-    --muted: #5d6673;
-    --border: #e2e5ea;
-    --accent: #2457d6;
-    --accent-soft: #e8eefc;
-    --chip: #eef0f3;
-    --shadow: 0 1px 2px rgba(20, 23, 28, .05), 0 6px 20px rgba(20, 23, 28, .06);
+    --text: #1d1a17;
+    --muted: #6b645c;
+    --border: #e7e1d8;
+    --accent: #d65a1f;
+    --accent-soft: #fbe9df;
+    --chip: #f1ece4;
+    --frame: #ece6dd;
+    --shadow: 0 2px 4px rgba(40, 30, 20, .05), 0 18px 40px rgba(40, 30, 20, .10);
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #0d1015;
-      --surface: #151a21;
-      --text: #e7eaee;
-      --muted: #98a1ad;
-      --border: #262d37;
-      --accent: #7aa2ff;
-      --accent-soft: #1c2640;
-      --chip: #1d232c;
-      --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 24px rgba(0, 0, 0, .25);
+      --bg: #131211;
+      --surface: #1c1a18;
+      --text: #ece7e1;
+      --muted: #a39b91;
+      --border: #2e2a26;
+      --accent: #f08447;
+      --accent-soft: #3a2518;
+      --chip: #26231f;
+      --frame: #2a2622;
+      --shadow: 0 2px 4px rgba(0, 0, 0, .3), 0 18px 40px rgba(0, 0, 0, .35);
     }
   }
   * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; overflow-x: clip; }
   body {
     margin: 0;
     background: var(--bg);
     color: var(--text);
-    font: 16px/1.55 Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+    font: 16px/1.6 Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
     -webkit-font-smoothing: antialiased;
   }
   a { color: inherit; }
-  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+  .wrap { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+  .display { font-family: Fraunces, Georgia, serif; font-weight: 600; letter-spacing: -.015em; }
+  .mono { font-family: "JetBrains Mono", ui-monospace, monospace; }
 
-  header { padding: 64px 0 32px; }
-  .profile { display: flex; align-items: center; gap: 18px; }
-  .profile img { width: 64px; height: 64px; border-radius: 50%; border: 1px solid var(--border); }
-  h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.15; margin: 0; letter-spacing: -.02em; }
-  .lead { color: var(--muted); max-width: 640px; margin: 18px 0 0; font-size: 17px; }
-  .stats { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-top: 20px; color: var(--muted); font-size: 14px; }
-  .stats b { color: var(--text); font-weight: 600; }
+  /* Navigation */
+  nav { display: flex; align-items: center; justify-content: space-between; padding: 22px 0; }
+  .me { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 600; }
+  .me img { width: 32px; height: 32px; border-radius: 50%; }
+  .navlinks { display: flex; gap: 22px; font-size: 14.5px; }
+  .navlinks a { text-decoration: none; color: var(--muted); }
+  .navlinks a:hover { color: var(--accent); }
 
-  .toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; padding: 8px 0 24px; }
-  .search {
-    flex: 1 1 240px; max-width: 340px;
-    padding: 9px 12px; border-radius: 8px; border: 1px solid var(--border);
-    background: var(--surface); color: var(--text); font: inherit; font-size: 14px;
-  }
-  .search:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
-  .filters { display: flex; flex-wrap: wrap; gap: 6px; }
-  .filter {
-    border: 1px solid var(--border); background: var(--surface); color: var(--muted);
-    padding: 6px 12px; border-radius: 999px; font: inherit; font-size: 13px; cursor: pointer;
-  }
-  .filter[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent); border-color: transparent; font-weight: 600; }
+  /* Hero */
+  .hero { display: grid; grid-template-columns: 1.05fr 1fr; gap: 56px; align-items: center; padding: 56px 0 88px; }
+  .kicker { color: var(--accent); font-size: 14px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; margin: 0 0 14px; }
+  .hero h1 { font-size: clamp(36px, 5.4vw, 60px); line-height: 1.06; margin: 0; }
+  .hero h1 em { font-style: italic; color: var(--accent); padding-right: .1em; }
+  .hero p.intro { color: var(--muted); font-size: 18px; max-width: 540px; margin: 22px 0 0; }
+  .focus { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 26px; }
+  .focus span { background: var(--chip); border: 1px solid var(--border); padding: 5px 12px; border-radius: 999px; font-size: 13.5px; }
+  .stats { display: flex; gap: 36px; margin-top: 34px; }
+  .stats div { display: flex; flex-direction: column; }
+  .stats b { font-family: Fraunces, Georgia, serif; font-size: 34px; line-height: 1; font-weight: 600; }
+  .stats span { color: var(--muted); font-size: 13.5px; margin-top: 6px; }
 
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; padding-bottom: 64px; }
-  .card {
-    display: flex; flex-direction: column;
-    background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
-    overflow: hidden; box-shadow: var(--shadow);
-    transition: transform .15s ease, border-color .15s ease;
+  .collage { position: relative; aspect-ratio: 5 / 4; }
+  .collage a {
+    position: absolute; width: 72%; border-radius: 10px; overflow: hidden;
+    box-shadow: var(--shadow); border: 1px solid var(--border); background: var(--frame);
+    transition: transform .25s ease, z-index 0s;
   }
-  .card:hover { transform: translateY(-2px); border-color: color-mix(in srgb, var(--accent) 40%, var(--border)); }
-  .thumb { display: block; aspect-ratio: 2 / 1; background: var(--chip); border-bottom: 1px solid var(--border); }
-  .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .body { padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
-  .name { font: 500 17px/1.3 "JetBrains Mono", ui-monospace, monospace; margin: 0; word-break: break-word; }
-  .name a { text-decoration: none; }
-  .name a:hover { color: var(--accent); }
-  .desc { color: var(--muted); font-size: 14.5px; margin: 0; }
-  .topics { display: flex; flex-wrap: wrap; gap: 6px; }
-  .topic { background: var(--chip); color: var(--muted); font-size: 12px; padding: 2px 8px; border-radius: 6px; }
-  .meta { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 13px; color: var(--muted); margin-top: auto; padding-top: 4px; }
+  .collage a img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; }
+  .collage a:nth-child(1) { left: 0; top: 4%; transform: rotate(-4deg); }
+  .collage a:nth-child(2) { right: 0; top: 0; transform: rotate(3deg); }
+  .collage a:nth-child(3) { left: 14%; bottom: 0; transform: rotate(-1deg); z-index: 2; }
+  .collage a:hover { transform: rotate(0) scale(1.03); z-index: 3; }
+
+  /* Projekte */
+  .section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; border-top: 1px solid var(--border); padding-top: 36px; margin-bottom: 20px; }
+  .section-head h2 { font-size: 30px; margin: 0; }
+  .section-head p { color: var(--muted); margin: 0; font-size: 14.5px; }
+
+  .project { display: grid; grid-template-columns: 1.25fr 1fr; gap: 56px; align-items: center; padding: 56px 0; }
+  .project:nth-child(even) .shots { order: 2; }
+  .project > *, .hero > * { min-width: 0; }
+  .info h3, .info .num { overflow-wrap: anywhere; }
+  .project + .project { border-top: 1px dashed var(--border); }
+
+  .window { border-radius: 12px; overflow: hidden; border: 1px solid var(--border); background: var(--surface); box-shadow: var(--shadow); }
+  .bar { display: flex; align-items: center; gap: 6px; padding: 9px 12px; background: var(--frame); border-bottom: 1px solid var(--border); }
+  .bar i { width: 10px; height: 10px; border-radius: 50%; background: var(--border); }
+  .bar i:nth-child(1) { background: #ec6a5e; } .bar i:nth-child(2) { background: #f4bf4f; } .bar i:nth-child(3) { background: #61c554; }
+  .bar span { margin-left: 10px; font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .main-shot { display: block; aspect-ratio: 16 / 10; background: var(--frame); }
+  .main-shot img { width: 100%; height: 100%; display: block; object-fit: cover; object-position: top; }
+  .main-shot img.tall, .main-shot img.vector { object-fit: contain; object-position: center; }
+  .main-shot img.vector { background: #f7f5f1; padding: 6%; }
+  .mosaic { display: grid; grid-template-columns: repeat(var(--cols, 3), 1fr); gap: 1px; background: var(--border); aspect-ratio: 16 / 10; }
+  .mosaic img { width: 100%; height: 100%; object-fit: contain; background: #f7f5f1; padding: 12%; min-height: 0; }
+  .thumbs { display: flex; gap: 8px; margin-top: 12px; }
+  .thumbs button {
+    flex: 0 0 64px; height: 42px; padding: 0; border-radius: 6px; overflow: hidden; cursor: pointer;
+    border: 2px solid transparent; background: var(--frame); opacity: .65; transition: opacity .15s;
+  }
+  .thumbs button[aria-pressed="true"] { border-color: var(--accent); opacity: 1; }
+  .thumbs button:hover { opacity: 1; }
+  .thumbs img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+
+  .info .num { color: var(--accent); font-size: 13px; }
+  .info h3 { font-size: clamp(26px, 3vw, 34px); line-height: 1.15; margin: 8px 0 4px; }
+  .info .tagline { color: var(--muted); font-style: italic; font-family: Fraunces, Georgia, serif; font-size: 18px; margin: 0 0 14px; }
+  .info .desc { margin: 0 0 18px; font-size: 16px; }
+  .topics { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
+  .topic { background: var(--chip); color: var(--muted); font-size: 12.5px; padding: 3px 9px; border-radius: 6px; }
+  .meta { display: flex; flex-wrap: wrap; gap: 4px 16px; color: var(--muted); font-size: 13.5px; margin-bottom: 22px; }
   .lang::before { content: ""; display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--dot, #999); margin-right: 6px; }
-  .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .actions { display: flex; flex-wrap: wrap; gap: 10px; }
   .btn {
-    display: inline-flex; align-items: center; gap: 6px;
-    padding: 8px 14px; border-radius: 8px; font-size: 14px; font-weight: 600; text-decoration: none;
-    border: 1px solid var(--border);
+    display: inline-flex; align-items: center; gap: 7px; padding: 10px 16px; border-radius: 999px;
+    font-size: 14.5px; font-weight: 600; text-decoration: none; border: 1px solid var(--border); background: var(--surface);
+    transition: transform .15s ease;
   }
-  .btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
-  @media (prefers-color-scheme: dark) { .btn.primary { color: #0d1015; } }
-  .btn:hover { filter: brightness(1.08); }
+  .btn:hover { transform: translateY(-1px); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  @media (prefers-color-scheme: dark) { .btn.primary { color: #1a0f08; } }
   .btn svg { width: 15px; height: 15px; }
+
+  footer { border-top: 1px solid var(--border); margin-top: 40px; padding: 40px 0 56px; color: var(--muted); font-size: 14px; }
+  footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+  footer a { color: var(--accent); }
   .empty { color: var(--muted); padding: 40px 0; }
 
-  footer { border-top: 1px solid var(--border); padding: 24px 0 40px; color: var(--muted); font-size: 13px; }
-  footer a { color: var(--accent); }
-
+  @media (max-width: 860px) {
+    .hero, .project { grid-template-columns: 1fr; gap: 32px; }
+    .project:nth-child(even) .shots { order: 0; }
+    .hero { padding: 24px 0 64px; }
+    .collage { max-width: 520px; width: 100%; margin: 0 auto; }
+    .project { padding: 40px 0; }
+  }
   @media (max-width: 520px) {
-    header { padding-top: 40px; }
-    .grid { grid-template-columns: 1fr; }
-    .search { max-width: none; }
+    .wrap { padding: 0 16px; }
+    .navlinks a.opt { display: none; }
+    .stats { gap: 24px; }
+    .section-head { flex-direction: column; gap: 4px; }
   }
 </style>
 </head>
 <body>
-<header class="wrap">
-  <div class="profile">
-    <img src="https://avatars.githubusercontent.com/u/265322079?v=4&s=128" alt="">
-    <h1>mupf-dev</h1>
+<nav class="wrap">
+  <a class="me" href="#top"><img src="https://avatars.githubusercontent.com/u/265322079?v=4&s=64" alt="">mupf-dev</a>
+  <div class="navlinks">
+    <a href="#projekte">Projekte</a>
+    <a class="opt" href="https://github.com/mupf-dev">GitHub</a>
   </div>
-  <p class="lead">Open-Source-Projekte rund um Smart Home, Self-Hosting und 3D im Browser. Jedes Projekt hat eine eigene Seite – hier sind alle an einem Ort.</p>
-  <div class="stats" id="stats"></div>
+</nav>
+
+<header class="wrap hero" id="top">
+  <div>
+    <p class="kicker">Entwicklungsportfolio</p>
+    <h1 class="display">Ich baue Software für <em>zuhause</em> – offen, selbst gehostet, im Browser.</h1>
+    <p class="intro">Hier sammle ich meine Projekte: schöne Web-Oberflächen für Geräte, die ohnehin schon im Haus stehen, Werkzeuge, mit denen man Räume in 3D plant, und KI, die lokal läuft statt in fremden Clouds. Alles quelloffen, alles zum Selbermachen.</p>
+    <div class="focus">
+      <span>Smart Home</span><span>Self-Hosting</span><span>3D im Browser</span><span>Lokale KI &amp; MCP</span>
+    </div>
+    <div class="stats" id="stats"></div>
+  </div>
+  <div class="collage" id="collage" aria-hidden="true"></div>
 </header>
 
-<main class="wrap">
-  <div class="toolbar">
-    <input class="search" id="search" type="search" placeholder="Projekte durchsuchen …" aria-label="Projekte durchsuchen">
-    <div class="filters" id="filters"></div>
+<main class="wrap" id="projekte">
+  <div class="section-head">
+    <h2 class="display">Projekte</h2>
+    <p>Zuletzt bearbeitet zuerst</p>
   </div>
-  <div class="grid" id="grid"></div>
+  <div id="list"></div>
 </main>
 
-<footer class="wrap">
-  <span id="generated"></span> ·
-  <a href="https://github.com/mupf-dev">github.com/mupf-dev</a>
+<footer>
+  <div class="wrap">
+    <span>Code auf <a href="https://github.com/mupf-dev">github.com/mupf-dev</a></span>
+    <span id="generated"></span>
+  </div>
 </footer>
 
 <script>
@@ -140,31 +201,47 @@ const ICON_EXT = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" str
 const ICON_GH = '<svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>';
 
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const fmtDate = iso => new Date(iso).toLocaleDateString("de-DE", { day: "numeric", month: "short", year: "numeric" });
+const fmtDate = iso => new Date(iso).toLocaleDateString("de-DE", { day: "numeric", month: "long", year: "numeric" });
+const isVector = url => /\.svg(\?|$)/i.test(url);
+const host = url => url.replace(/^https?:\/\//, "").replace(/\/$/, "");
+const fallbackImg = (owner, r) => `https://opengraph.githubassets.com/1/${owner}/${r.name}`;
 
-let repos = [], activeLang = null, query = "";
+function shots(r, owner, live) {
+  const imgs = r.images?.length ? r.images : [fallbackImg(owner, r)];
+  const href = esc(live || r.url);
+  // Reine Vektor-Vorschauen (z. B. Objektbibliothek) als Mosaik zeigen
+  if (imgs.every(isVector) && imgs.length >= 3) {
+    return `<div class="window"><div class="bar"><i></i><i></i><i></i><span class="mono">${esc(host(live || r.url))}</span></div>
+      <a class="mosaic" href="${href}" style="--cols:${imgs.length >= 6 ? 3 : 2}">${imgs.slice(0, imgs.length >= 6 ? 6 : 4).map(u => `<img src="${esc(u)}" alt="" loading="lazy">`).join("")}</a></div>`;
+  }
+  const thumbs = imgs.length > 1
+    ? `<div class="thumbs">${imgs.map((u, i) => `<button type="button" data-src="${esc(u)}" aria-pressed="${i === 0}" aria-label="Screenshot ${i + 1}"><img src="${esc(u)}" alt="" loading="lazy"></button>`).join("")}</div>`
+    : "";
+  return `<div class="window"><div class="bar"><i></i><i></i><i></i><span class="mono">${esc(host(live || r.url))}</span></div>
+    <a class="main-shot" href="${href}"><img src="${esc(imgs[0])}" alt="Screenshot von ${esc(r.title || r.name)}" loading="lazy"${isVector(imgs[0]) ? ' class="vector"' : ""}></a></div>${thumbs}`;
+}
 
-function card(r, owner) {
+function project(r, i, owner) {
   const live = r.pages || r.homepage;
-  const extra = r.homepage && r.pages && r.homepage.replace(/\/$/, "") !== r.pages.replace(/\/$/, "") ? r.homepage : null;
-  const img = `https://opengraph.githubassets.com/1/${owner}/${r.name}`;
+  const extra = r.homepage && r.pages && host(r.homepage) !== host(r.pages) ? r.homepage : null;
+  const title = r.title || r.name;
   return `
-  <article class="card">
-    <a class="thumb" href="${esc(live || r.url)}" tabindex="-1" aria-hidden="true">
-      <img src="${esc(img)}" alt="" loading="lazy" width="1200" height="600">
-    </a>
-    <div class="body">
-      <h2 class="name"><a href="${esc(live || r.url)}">${esc(r.name)}</a></h2>
+  <article class="project" id="${esc(r.name)}">
+    <div class="shots">${shots(r, owner, live)}</div>
+    <div class="info">
+      <span class="num mono">${String(i + 1).padStart(2, "0")} — ${esc(r.name)}</span>
+      <h3 class="display">${esc(title)}</h3>
+      ${r.tagline ? `<p class="tagline">${esc(r.tagline)}</p>` : ""}
       ${r.description ? `<p class="desc">${esc(r.description)}</p>` : ""}
-      ${r.topics?.length ? `<div class="topics">${r.topics.slice(0, 6).map(t => `<span class="topic">${esc(t)}</span>`).join("")}</div>` : ""}
+      ${r.topics?.length ? `<div class="topics">${r.topics.slice(0, 8).map(t => `<span class="topic">${esc(t)}</span>`).join("")}</div>` : ""}
       <div class="meta">
         ${r.language ? `<span class="lang" style="--dot:${LANG_COLORS[r.language] || "#999"}">${esc(r.language)}</span>` : ""}
         ${r.stars ? `<span>★ ${r.stars}</span>` : ""}
-        <span>aktualisiert ${fmtDate(r.updated)}</span>
+        <span>zuletzt bearbeitet am ${fmtDate(r.updated)}</span>
         ${r.archived ? "<span>archiviert</span>" : ""}
       </div>
       <div class="actions">
-        ${live ? `<a class="btn primary" href="${esc(live)}">${ICON_EXT} Projektseite</a>` : ""}
+        ${live ? `<a class="btn primary" href="${esc(live)}">${ICON_EXT} Projektseite ansehen</a>` : ""}
         ${extra ? `<a class="btn" href="${esc(extra)}">${ICON_EXT} Website</a>` : ""}
         <a class="btn" href="${esc(r.url)}">${ICON_GH} Code</a>
       </div>
@@ -172,46 +249,46 @@ function card(r, owner) {
   </article>`;
 }
 
-function render(owner) {
-  const q = query.toLowerCase();
-  const list = repos.filter(r =>
-    (!activeLang || r.language === activeLang) &&
-    (!q || [r.name, r.description, ...(r.topics || [])].join(" ").toLowerCase().includes(q))
-  );
-  document.getElementById("grid").innerHTML = list.length
-    ? list.map(r => card(r, owner)).join("")
-    : '<p class="empty">Keine Projekte gefunden.</p>';
-}
+// Klick auf ein Vorschaubild tauscht den großen Screenshot
+document.addEventListener("click", e => {
+  const b = e.target.closest(".thumbs button");
+  if (!b) return;
+  const shotsEl = b.closest(".shots");
+  const img = shotsEl.querySelector(".main-shot img");
+  img.src = b.dataset.src;
+  img.classList.toggle("vector", isVector(b.dataset.src));
+  shotsEl.querySelectorAll(".thumbs button").forEach(x => x.setAttribute("aria-pressed", x === b));
+});
+
+// Hochkant-Screenshots (Handy) nicht abschneiden
+document.addEventListener("load", e => {
+  const img = e.target;
+  if (img.tagName === "IMG" && img.closest(".main-shot")) img.classList.toggle("tall", img.naturalHeight > img.naturalWidth);
+}, true);
 
 fetch("repos.json", { cache: "no-cache" })
   .then(r => r.json())
   .then(data => {
-    repos = data.repos;
-    const owner = data.owner;
-    const langs = [...new Set(repos.map(r => r.language).filter(Boolean))].sort();
+    const { owner, repos } = data;
+    const langs = new Set(repos.map(r => r.language).filter(Boolean));
     const withPages = repos.filter(r => r.pages || r.homepage).length;
 
     document.getElementById("stats").innerHTML =
-      `<span><b>${repos.length}</b> Projekte</span>` +
-      `<span><b>${withPages}</b> mit eigener Seite</span>` +
-      `<span><b>${langs.length}</b> Sprachen</span>`;
+      `<div><b>${repos.length}</b><span>Open-Source-Projekte</span></div>` +
+      `<div><b>${withPages}</b><span>mit eigener Seite</span></div>` +
+      `<div><b>${langs.size}</b><span>Sprachen</span></div>`;
     document.getElementById("generated").textContent = "Stand: " + fmtDate(data.generated);
 
-    const filters = document.getElementById("filters");
-    filters.innerHTML = ["Alle", ...langs].map((l, i) =>
-      `<button class="filter" data-lang="${i ? esc(l) : ""}" aria-pressed="${i === 0}">${esc(l)}</button>`).join("");
-    filters.addEventListener("click", e => {
-      const b = e.target.closest(".filter");
-      if (!b) return;
-      activeLang = b.dataset.lang || null;
-      filters.querySelectorAll(".filter").forEach(x => x.setAttribute("aria-pressed", x === b));
-      render(owner);
-    });
-    document.getElementById("search").addEventListener("input", e => { query = e.target.value; render(owner); });
-    render(owner);
+    const featured = repos.filter(r => r.images?.length && !isVector(r.images[0])).slice(0, 3);
+    document.getElementById("collage").innerHTML = featured.map(r =>
+      `<a href="#${esc(r.name)}" tabindex="-1"><img src="${esc(r.images[0])}" alt=""></a>`).join("");
+
+    document.getElementById("list").innerHTML = repos.length
+      ? repos.map((r, i) => project(r, i, owner)).join("")
+      : '<p class="empty">Noch keine öffentlichen Projekte.</p>';
   })
   .catch(() => {
-    document.getElementById("grid").innerHTML =
+    document.getElementById("list").innerHTML =
       '<p class="empty">Projekte konnten nicht geladen werden. <a href="https://github.com/mupf-dev?tab=repositories">Direkt auf GitHub ansehen</a>.</p>';
   });
 </script>

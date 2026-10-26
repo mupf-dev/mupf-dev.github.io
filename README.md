@@ -1,12 +1,13 @@
 # mupf-dev.github.io
 
-Übersichtsseite aller öffentlichen Projekte von [mupf-dev](https://github.com/mupf-dev) – live unter
+Persönliches Entwicklungsportfolio mit allen öffentlichen Projekten von [mupf-dev](https://github.com/mupf-dev) – live unter
 **https://mupf-dev.github.io/**.
 
 Die Projektliste wird nicht von Hand gepflegt: Der Workflow `.github/workflows/pages.yml` liest bei jedem Push und
 einmal täglich alle öffentlichen, eigenen Repositories (ohne Forks) über die GitHub-API aus, erzeugt daraus
 `repos.json` und veröffentlicht die Seite. Hat ein Repository GitHub Pages aktiviert, verlinkt die Karte direkt
-auf dessen Projektseite.
+auf dessen Projektseite; Titel und Screenshots werden automatisch von dieser Projektseite übernommen
+(`og:image` und die Bilder auf der Seite, `scripts/enrich.py`).
 
 Lokal testen:
 
