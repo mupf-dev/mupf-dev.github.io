@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Erzeugt repos.json aus den öffentlichen, eigenen (nicht geforkten) Repositories.
+# Erzeugt repos.json aus den öffentlichen, eigenen (nicht geforkten) Repositories, ohne Profil- und Pages-Repo.
 set -euo pipefail
 OWNER="${OWNER:-mupf-dev}"
 OUT="${1:-repos.json}"
@@ -7,7 +7,7 @@ OUT="${1:-repos.json}"
 gh api --paginate "users/$OWNER/repos?per_page=100&type=owner" \
   | jq -s --arg owner "$OWNER" '
       add
-      | map(select(.fork | not) | select(.private | not) | select(.name != ($owner + ".github.io")))
+      | map(select(.fork | not) | select(.private | not) | select(.name != ($owner + ".github.io")) | select(.name != $owner))
       | map({
           name,
           description,

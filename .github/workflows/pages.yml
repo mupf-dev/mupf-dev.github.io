@@ -31,7 +31,8 @@ jobs:
         run: |
           mkdir -p _site
           ./scripts/build-data.sh _site/repos.json
-          cp index.html _site/
+          cp index.html og.jpg _site/
+          python3 -I scripts/prerender.py _site/repos.json _site
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

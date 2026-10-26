@@ -6,7 +6,7 @@ from html.parser import HTMLParser
 from urllib.parse import urljoin
 
 MAX_IMAGES = 5
-SKIP = ("shields.io", "badge", "logo", "icon", "favicon", "avatar", "${")
+SKIP = ("shields.io", "badge", "logo", "icon", "favicon", "avatar", "${", "/og.jpg")
 
 
 class PageParser(HTMLParser):
