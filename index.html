@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mupf-dev – Projekte</title>
+<meta name="description" content="Alle Open-Source-Projekte von mupf-dev auf einen Blick – mit Links zu Live-Seiten und Code.">
+<link rel="icon" href="https://avatars.githubusercontent.com/u/265322079?v=4&s=64">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f6f7f9;
+    --surface: #ffffff;
+    --text: #14171c;
+    --muted: #5d6673;
+    --border: #e2e5ea;
+    --accent: #2457d6;
+    --accent-soft: #e8eefc;
+    --chip: #eef0f3;
+    --shadow: 0 1px 2px rgba(20, 23, 28, .05), 0 6px 20px rgba(20, 23, 28, .06);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0d1015;
+      --surface: #151a21;
+      --text: #e7eaee;
+      --muted: #98a1ad;
+      --border: #262d37;
+      --accent: #7aa2ff;
+      --accent-soft: #1c2640;
+      --chip: #1d232c;
+      --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 24px rgba(0, 0, 0, .25);
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 16px/1.55 Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+
+  header { padding: 64px 0 32px; }
+  .profile { display: flex; align-items: center; gap: 18px; }
+  .profile img { width: 64px; height: 64px; border-radius: 50%; border: 1px solid var(--border); }
+  h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.15; margin: 0; letter-spacing: -.02em; }
+  .lead { color: var(--muted); max-width: 640px; margin: 18px 0 0; font-size: 17px; }
+  .stats { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-top: 20px; color: var(--muted); font-size: 14px; }
+  .stats b { color: var(--text); font-weight: 600; }
+
+  .toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; padding: 8px 0 24px; }
+  .search {
+    flex: 1 1 240px; max-width: 340px;
+    padding: 9px 12px; border-radius: 8px; border: 1px solid var(--border);
+    background: var(--surface); color: var(--text); font: inherit; font-size: 14px;
+  }
+  .search:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+  .filters { display: flex; flex-wrap: wrap; gap: 6px; }
+  .filter {
+    border: 1px solid var(--border); background: var(--surface); color: var(--muted);
+    padding: 6px 12px; border-radius: 999px; font: inherit; font-size: 13px; cursor: pointer;
+  }
+  .filter[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent); border-color: transparent; font-weight: 600; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; padding-bottom: 64px; }
+  .card {
+    display: flex; flex-direction: column;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
+    overflow: hidden; box-shadow: var(--shadow);
+    transition: transform .15s ease, border-color .15s ease;
+  }
+  .card:hover { transform: translateY(-2px); border-color: color-mix(in srgb, var(--accent) 40%, var(--border)); }
+  .thumb { display: block; aspect-ratio: 2 / 1; background: var(--chip); border-bottom: 1px solid var(--border); }
+  .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .body { padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+  .name { font: 500 17px/1.3 "JetBrains Mono", ui-monospace, monospace; margin: 0; word-break: break-word; }
+  .name a { text-decoration: none; }
+  .name a:hover { color: var(--accent); }
+  .desc { color: var(--muted); font-size: 14.5px; margin: 0; }
+  .topics { display: flex; flex-wrap: wrap; gap: 6px; }
+  .topic { background: var(--chip); color: var(--muted); font-size: 12px; padding: 2px 8px; border-radius: 6px; }
+  .meta { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 13px; color: var(--muted); margin-top: auto; padding-top: 4px; }
+  .lang::before { content: ""; display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--dot, #999); margin-right: 6px; }
+  .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 14px; border-radius: 8px; font-size: 14px; font-weight: 600; text-decoration: none;
+    border: 1px solid var(--border);
+  }
+  .btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+  @media (prefers-color-scheme: dark) { .btn.primary { color: #0d1015; } }
+  .btn:hover { filter: brightness(1.08); }
+  .btn svg { width: 15px; height: 15px; }
+  .empty { color: var(--muted); padding: 40px 0; }
+
+  footer { border-top: 1px solid var(--border); padding: 24px 0 40px; color: var(--muted); font-size: 13px; }
+  footer a { color: var(--accent); }
+
+  @media (max-width: 520px) {
+    header { padding-top: 40px; }
+    .grid { grid-template-columns: 1fr; }
+    .search { max-width: none; }
+  }
+</style>
+</head>
+<body>
+<header class="wrap">
+  <div class="profile">
+    <img src="https://avatars.githubusercontent.com/u/265322079?v=4&s=128" alt="">
+    <h1>mupf-dev</h1>
+  </div>
+  <p class="lead">Open-Source-Projekte rund um Smart Home, Self-Hosting und 3D im Browser. Jedes Projekt hat eine eigene Seite – hier sind alle an einem Ort.</p>
+  <div class="stats" id="stats"></div>
+</header>
+
+<main class="wrap">
+  <div class="toolbar">
+    <input class="search" id="search" type="search" placeholder="Projekte durchsuchen …" aria-label="Projekte durchsuchen">
+    <div class="filters" id="filters"></div>
+  </div>
+  <div class="grid" id="grid"></div>
+</main>
+
+<footer class="wrap">
+  <span id="generated"></span> ·
+  <a href="https://github.com/mupf-dev">github.com/mupf-dev</a>
+</footer>
+
+<script>
+const LANG_COLORS = {
+  Python: "#3572A5", JavaScript: "#f1e05a", TypeScript: "#3178c6", HCL: "#844FBA",
+  Go: "#00ADD8", Rust: "#dea584", Shell: "#89e051", HTML: "#e34c26", CSS: "#563d7c",
+};
+const ICON_EXT = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h4v4M13 3 7 9M12 9.5V13H3V4h3.5"/></svg>';
+const ICON_GH = '<svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>';
+
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fmtDate = iso => new Date(iso).toLocaleDateString("de-DE", { day: "numeric", month: "short", year: "numeric" });
+
+let repos = [], activeLang = null, query = "";
+
+function card(r, owner) {
+  const live = r.pages || r.homepage;
+  const extra = r.homepage && r.pages && r.homepage.replace(/\/$/, "") !== r.pages.replace(/\/$/, "") ? r.homepage : null;
+  const img = `https://opengraph.githubassets.com/1/${owner}/${r.name}`;
+  return `
+  <article class="card">
+    <a class="thumb" href="${esc(live || r.url)}" tabindex="-1" aria-hidden="true">
+      <img src="${esc(img)}" alt="" loading="lazy" width="1200" height="600">
+    </a>
+    <div class="body">
+      <h2 class="name"><a href="${esc(live || r.url)}">${esc(r.name)}</a></h2>
+      ${r.description ? `<p class="desc">${esc(r.description)}</p>` : ""}
+      ${r.topics?.length ? `<div class="topics">${r.topics.slice(0, 6).map(t => `<span class="topic">${esc(t)}</span>`).join("")}</div>` : ""}
+      <div class="meta">
+        ${r.language ? `<span class="lang" style="--dot:${LANG_COLORS[r.language] || "#999"}">${esc(r.language)}</span>` : ""}
+        ${r.stars ? `<span>★ ${r.stars}</span>` : ""}
+        <span>aktualisiert ${fmtDate(r.updated)}</span>
+        ${r.archived ? "<span>archiviert</span>" : ""}
+      </div>
+      <div class="actions">
+        ${live ? `<a class="btn primary" href="${esc(live)}">${ICON_EXT} Projektseite</a>` : ""}
+        ${extra ? `<a class="btn" href="${esc(extra)}">${ICON_EXT} Website</a>` : ""}
+        <a class="btn" href="${esc(r.url)}">${ICON_GH} Code</a>
+      </div>
+    </div>
+  </article>`;
+}
+
+function render(owner) {
+  const q = query.toLowerCase();
+  const list = repos.filter(r =>
+    (!activeLang || r.language === activeLang) &&
+    (!q || [r.name, r.description, ...(r.topics || [])].join(" ").toLowerCase().includes(q))
+  );
+  document.getElementById("grid").innerHTML = list.length
+    ? list.map(r => card(r, owner)).join("")
+    : '<p class="empty">Keine Projekte gefunden.</p>';
+}
+
+fetch("repos.json", { cache: "no-cache" })
+  .then(r => r.json())
+  .then(data => {
+    repos = data.repos;
+    const owner = data.owner;
+    const langs = [...new Set(repos.map(r => r.language).filter(Boolean))].sort();
+    const withPages = repos.filter(r => r.pages || r.homepage).length;
+
+    document.getElementById("stats").innerHTML =
+      `<span><b>${repos.length}</b> Projekte</span>` +
+      `<span><b>${withPages}</b> mit eigener Seite</span>` +
+      `<span><b>${langs.length}</b> Sprachen</span>`;
+    document.getElementById("generated").textContent = "Stand: " + fmtDate(data.generated);
+
+    const filters = document.getElementById("filters");
+    filters.innerHTML = ["Alle", ...langs].map((l, i) =>
+      `<button class="filter" data-lang="${i ? esc(l) : ""}" aria-pressed="${i === 0}">${esc(l)}</button>`).join("");
+    filters.addEventListener("click", e => {
+      const b = e.target.closest(".filter");
+      if (!b) return;
+      activeLang = b.dataset.lang || null;
+      filters.querySelectorAll(".filter").forEach(x => x.setAttribute("aria-pressed", x === b));
+      render(owner);
+    });
+    document.getElementById("search").addEventListener("input", e => { query = e.target.value; render(owner); });
+    render(owner);
+  })
+  .catch(() => {
+    document.getElementById("grid").innerHTML =
+      '<p class="empty">Projekte konnten nicht geladen werden. <a href="https://github.com/mupf-dev?tab=repositories">Direkt auf GitHub ansehen</a>.</p>';
+  });
+</script>
+</body>
+</html>
